@@ -21,6 +21,7 @@ body {
   font-weight: 500;
   overflow-x: hidden;
 }
+
 .container {
   background: rgba(24, 24, 16, 0.2);
   width: 80%;
@@ -28,10 +29,6 @@ body {
   border-radius: 20px;
   text-align: center;
   margin: 50px 0;
-}
-
-.title {
-  color: #ebeaea;
 }
 
 .logo {
@@ -58,6 +55,20 @@ form {
   opacity: 1;
 }
 
+.form-btn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+select{
+    width: 70px;
+    margin-right: 10px;
+    background-color: rgba(209, 208, 208, 0.801);
+    border-radius: 15px;
+    padding: 2px;
+}
+
 input[type="text"] {
   text-align: center;
   height: 60px;
@@ -79,11 +90,30 @@ input[type="submit"] {
   height: 40px;
   background-color: #5162cc;
   color: white;
+  cursor: pointer;
+}
+
+.filter{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 50px;
+    margin-left: 20px;
+}
+
+.filter-option{
+    margin-right: 40px;
+    cursor: pointer;
+}
+
+.activated-filter{
+    border-bottom: 2px solid;
+    padding-bottom: 10px;
 }
 
 .content-row {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   text-align: left;
   margin: 15px;
   border-bottom: 1px solid #ebeaea;
