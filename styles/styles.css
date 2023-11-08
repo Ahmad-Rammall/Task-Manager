@@ -156,3 +156,9 @@ input[type="submit"] {
 .fa-pen-to-square {
   color: yellow;
 }
+
+.checked-task{
+  text-decoration: line-through;
+  text-decoration-color: tomato;
+  text-decoration-thickness: 3px;
+}

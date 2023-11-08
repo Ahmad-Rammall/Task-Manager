@@ -26,28 +26,41 @@ addBtn.addEventListener("click", function (e) {
   };
 
   tasks.push(taskObject);
-  addTasksToList(tasks);
+  addTasksToList(tasks, taskObject);
+  console.log(tasks);
 });
 
-function addTasksToList(tasksArray) {
-  tasksList.innerHTML = "";
-  for (let i = 0; i < tasksArray.length; i++) {
-    const taskItem = document.createElement("div");
-    taskItem.innerHTML = `
-        <div class="task" id="task-${i}-name">
-          ${tasksArray[i].taskName}
+function addTasksToList(tasksArray, taskObject) {
+  const taskItem = document.createElement("div");
+  taskItem.innerHTML = `
+        <div class="task">
+          ${taskObject.taskName}
         </div>
-        <div class="date" id="task-${i}-date">Date</div>
-        <div class="priority" id="task-${i}-priority">${tasksArray[i].priority}</div>
+        <div class="date">Date</div>
+        <div class="priority">${taskObject.priority}</div>
         <div class="actions">
-          <button class="btn-icon" name="${i}"><i class="fa-solid fa-check"></i></button>
-          <button class="btn-icon" name="${i}">
+          <button class="btn-icon" id="checkBtn" ><i class="fa-solid fa-check"></i></button>
+          <button class="btn-icon" id="editBtn">
             <i class="fa-regular fa-pen-to-square"></i>
           </button>
-          <button class="btn-icon" name="${i}"><i class="fa-solid fa-trash"></i></button>
+          <button class="btn-icon" id="deleteBtn"><i class="fa-solid fa-trash"></i></button>
         </div>
         `;
-    taskItem.setAttribute('class','content-row')
-    tasksList.appendChild(taskItem);
-  }
+  taskItem.setAttribute("class", "content-row");
+  tasksList.appendChild(taskItem);
+
+  taskItem.querySelector("#checkBtn").addEventListener("click", function () {
+    taskItem.setAttribute("class", "content-row checked-task");
+  });
+
+  taskItem.querySelector("#editBtn").addEventListener("click", function () {
+    taskItem.style.color = "red";
+  });
+
+  taskItem.querySelector("#deleteBtn").addEventListener("click", function () {
+    //remove the task from the array
+    tasksArray.splice(taskObject.id, 1);
+    // Remove the task item from the DOM
+    taskItem.remove();
+  });
 }
