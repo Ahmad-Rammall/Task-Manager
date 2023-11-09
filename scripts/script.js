@@ -2,9 +2,15 @@ let addBtn = document.getElementById("addBtn");
 let taskName = document.getElementById("taskName");
 let priority = document.getElementById("priority");
 let tasksList = document.getElementById("tasksList");
+let popup = document.getElementById("popup");
+let popupText = document.getElementById("popupText");
+let popupPriority = document.getElementById("popupPriority");
+let filterAll = document.getElementById("filterAll");
+let filterCompleted = document.getElementById("filterCompleted");
+let filterActive = document.getElementById("filterActive");
 
 let tasks = [];
-let id = -1;
+let completedTasks = [];
 
 addBtn.addEventListener("click", function (e) {
   e.preventDefault();
@@ -17,27 +23,26 @@ addBtn.addEventListener("click", function (e) {
     priority.value = "low";
   }
 
-  id++;
-
   const taskObject = {
-    id: id,
+    id: tasks.length,
     taskName: taskName.value,
+    date: "",
     priority: priority.value,
+    checked: false,
   };
 
   tasks.push(taskObject);
   addTasksToList(tasks, taskObject);
-  console.log(tasks);
 });
 
 function addTasksToList(tasksArray, taskObject) {
   const taskItem = document.createElement("div");
   taskItem.innerHTML = `
-        <div class="task">
+        <div class="task" id="taskName">
           ${taskObject.taskName}
         </div>
-        <div class="date">Date</div>
-        <div class="priority">${taskObject.priority}</div>
+        <div class="date">${taskObject.date}</div>
+        <div class="priority" id="taskPriority">${taskObject.priority}</div>
         <div class="actions">
           <button class="btn-icon" id="checkBtn" ><i class="fa-solid fa-check"></i></button>
           <button class="btn-icon" id="editBtn">
@@ -47,14 +52,17 @@ function addTasksToList(tasksArray, taskObject) {
         </div>
         `;
   taskItem.setAttribute("class", "content-row");
+  taskItem.setAttribute("id", `task-${taskObject.id}`);
   tasksList.appendChild(taskItem);
 
   taskItem.querySelector("#checkBtn").addEventListener("click", function () {
     taskItem.setAttribute("class", "content-row checked-task");
+    completedTasks.push(taskObject);
+    taskObject.checked = true;
   });
 
   taskItem.querySelector("#editBtn").addEventListener("click", function () {
-    taskItem.style.color = "red";
+    openPopup(taskObject);
   });
 
   taskItem.querySelector("#deleteBtn").addEventListener("click", function () {
@@ -64,3 +72,92 @@ function addTasksToList(tasksArray, taskObject) {
     taskItem.remove();
   });
 }
+
+function openPopup(taskObject) {
+  popupText.value = taskObject.taskName;
+  popupPriority.value = taskObject.priority;
+  popup.setAttribute("class", "popup open-popup");
+  popup.setAttribute("edited-task-id", `${taskObject.id}`);
+}
+
+document.getElementById("savePopup").addEventListener("click", function () {
+  const editedTaskName = popupText.value;
+  const editedPriority = popupPriority.value;
+
+  if (editedTaskName == "") {
+    alert("Task name cannot be empty!");
+    return;
+  }
+
+  const taskId = parseInt(popup.getAttribute("edited-task-id"));
+
+  // Find the task in the tasks array based on its ID
+  const editedTask = tasks.find((task) => task.id === taskId);
+
+  // Update the task properties
+  editedTask.taskName = editedTaskName;
+  editedTask.priority = editedPriority;
+
+  // Update the corresponding DOM elements
+  const taskItem = tasksList.querySelector(
+    `.content-row[id="task-${editedTask.id}"]`
+  );
+  taskItem.querySelector("#taskName").textContent = editedTaskName;
+  taskItem.querySelector("#taskPriority").textContent = editedPriority;
+});
+
+document.getElementById("cancelPopup").addEventListener("click", function () {
+  popup.setAttribute("class", "popup");
+});
+
+filterAll.addEventListener("click", function () {
+  filterAll.classList.add('activated-filter');
+  filterActive.classList.remove('activated-filter')
+  filterCompleted.classList.remove('activated-filter')
+
+  const checkedTasks = tasksList.querySelectorAll(".checked-task");
+  const uncheckedTasks = tasksList.querySelectorAll(
+    `.content-row:not(.checked-task)`
+  );
+  checkedTasks.forEach((element) => {
+    element.style.display = "flex";
+  });
+  uncheckedTasks.forEach((element) => {
+    element.style.display = "flex";
+  });
+});
+
+filterActive.addEventListener("click", function () {
+    filterAll.classList.remove('activated-filter');
+    filterActive.classList.add('activated-filter')
+    filterCompleted.classList.remove('activated-filter')
+  const checkedTasks = tasksList.querySelectorAll(".checked-task");
+  const uncheckedTasks = tasksList.querySelectorAll(
+    `.content-row:not(.checked-task)`
+  );
+  checkedTasks.forEach((element) => {
+    element.style.display = "none";
+  });
+  uncheckedTasks.forEach((element) => {
+    element.style.display = "flex";
+  });
+});
+
+filterCompleted.addEventListener("click", function () {
+    filterAll.classList.remove('activated-filter');
+    filterActive.classList.remove('activated-filter')
+    filterCompleted.classList.add('activated-filter')
+  const uncheckedTasks = tasksList.querySelectorAll(
+    `.content-row:not(.checked-task)`
+  );
+
+  const checkedTasks = tasksList.querySelectorAll(".checked-task");
+
+  uncheckedTasks.forEach((element) => {
+    element.style.display = "none";
+  });
+
+  checkedTasks.forEach((element) => {
+    element.style.display = "flex";
+  });
+});

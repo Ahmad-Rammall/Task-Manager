@@ -19,7 +19,7 @@
       <img src="./assets/images/logo.webp" alt="logo" class="logo" />
       <h1 class="title">Task Manager</h1>
       <form action="">
-        <input type="text" placeholder="Add New Task" id="taskName"/>
+        <input type="text" placeholder="Add New Task" id="taskName" />
         <div class="form-btn">
           <select name="" id="priority">
             <option value="">Priority</option>
@@ -32,9 +32,9 @@
       </form>
 
       <div class="filter">
-        <div class="filter-option all-filter activated-filter">All</div>
-        <div class="filter-option active-filter">Active</div>
-        <div class="filter-option completed-filter">Completed</div>
+        <div class="filter-option all-filter activated-filter" id="filterAll">All</div>
+        <div class="filter-option active-filter" id="filterActive">Active</div>
+        <div class="filter-option completed-filter" id="filterCompleted">Completed</div>
       </div>
 
       <div class="content-row main-row">
@@ -45,6 +45,23 @@
       </div>
 
       <div id="tasksList"></div>
+
+      <div class="popup" id="popup">
+        <div class="center-popup">
+          <input type="text" placeholder="Edit Task" id="popupText"/>
+        <select name="" id="popupPriority">
+          <option value="">Priority</option>
+          <option value="low">Low</option>
+          <option value="middle">Middle</option>
+          <option value="high">High</option>
+        </select>
+        </div>
+
+        <div class="popup-buttons">
+          <button class="popup-button" id="savePopup">Save</button>
+          <button class="popup-button" id="cancelPopup">Cancel</button>
+        </div>
+      </div>
     </div>
 
     <script
