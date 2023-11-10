@@ -1,13 +1,13 @@
-let addBtn = document.getElementById("addBtn");
-let taskName = document.getElementById("taskName");
-let priority = document.getElementById("priority");
-let tasksList = document.getElementById("tasksList");
-let popup = document.getElementById("popup");
-let popupText = document.getElementById("popupText");
-let popupPriority = document.getElementById("popupPriority");
-let filterAll = document.getElementById("filterAll");
-let filterCompleted = document.getElementById("filterCompleted");
-let filterActive = document.getElementById("filterActive");
+let addBtn = document.getElementById("addBtn"); //Button to add a task
+let taskName = document.getElementById("taskName"); //Name of the task
+let priority = document.getElementById("priority"); //Priority of the task
+let tasksList = document.getElementById("tasksList"); //List that contains the tasks
+let popup = document.getElementById("popup"); //The Popup Modal
+let popupText = document.getElementById("popupText"); //Text entered in the popup's input
+let popupPriority = document.getElementById("popupPriority");//Priority chosen in the popup
+let filterAll = document.getElementById("filterAll");//'All' filter button
+let filterCompleted = document.getElementById("filterCompleted");//Completed filter button
+let filterActive = document.getElementById("filterActive");//Active filter button
 let sortByDateBtn = document.getElementById("sortDateBtn");
 let sortPriorityBtn = document.getElementById("sortPriorityBtn");
 
@@ -22,17 +22,20 @@ function sortTasksByPriority() {
 
 function sortTasksByDate() {
   tasks.sort((a, b) => {
-    return a.date - b.date
+    return a.date - b.date;
   });
   console.log(tasks);
   displayTasks();
 }
 
+//To chose which sorting function
 function sortList() {
   let sortChosen = document.getElementsByClassName("sorting-chosen");
   console.log(sortChosen[0].id);
-  if (sortChosen[0].id == "sortDateBtn") {sortTasksByDate(); console.log('xxx');}
-  else sortTasksByPriority();
+  if (sortChosen[0].id == "sortDateBtn") {
+    sortTasksByDate();
+    console.log("xxx");
+  } else sortTasksByPriority();
 }
 
 function displayTasks() {
@@ -61,7 +64,6 @@ addBtn.addEventListener("click", function (e) {
 
   tasks.push(taskObject);
   sortList();
-  console.log(tasks);
   addTasksToList(taskObject);
 });
 
@@ -84,6 +86,7 @@ function convertPriority(taskObject) {
   }
 }
 
+//To add the task to the tasks list
 function addTasksToList(taskObject) {
   const existingTask = document.getElementById(`task-${taskObject.id}`);
 
@@ -128,6 +131,7 @@ function addTasksToList(taskObject) {
   });
 }
 
+//Open the popup modal
 function openPopup(taskObject) {
   popupText.value = taskObject.taskName;
   popupPriority.value = taskObject.priority;
@@ -135,6 +139,7 @@ function openPopup(taskObject) {
   popup.setAttribute("edited-task-id", `${taskObject.id}`);
 }
 
+//Save Button inside the popup modal
 document.getElementById("savePopup").addEventListener("click", function () {
   const editedTaskName = popupText.value;
   const editedPriority = popupPriority.value;
@@ -219,14 +224,14 @@ filterCompleted.addEventListener("click", function () {
   });
 });
 
-sortByDateBtn.addEventListener('click' , function () { 
-  sortByDateBtn.classList.add('sorting-chosen')
-  sortPriorityBtn.classList.remove('sorting-chosen')
-  sortTasksByDate()
- })
+sortByDateBtn.addEventListener("click", function () {
+  sortByDateBtn.classList.add("sorting-chosen");
+  sortPriorityBtn.classList.remove("sorting-chosen");
+  sortTasksByDate();
+});
 
- sortPriorityBtn.addEventListener('click' , function () { 
-  sortByDateBtn.classList.remove('sorting-chosen')
-  sortPriorityBtn.classList.add('sorting-chosen')
-  sortTasksByPriority()
- })
+sortPriorityBtn.addEventListener("click", function () {
+  sortByDateBtn.classList.remove("sorting-chosen");
+  sortPriorityBtn.classList.add("sorting-chosen");
+  sortTasksByPriority();
+});
