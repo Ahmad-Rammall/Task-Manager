@@ -4,15 +4,16 @@ let priority = document.getElementById("priority"); //Priority of the task
 let tasksList = document.getElementById("tasksList"); //List that contains the tasks
 let popup = document.getElementById("popup"); //The Popup Modal
 let popupText = document.getElementById("popupText"); //Text entered in the popup's input
-let popupPriority = document.getElementById("popupPriority");//Priority chosen in the popup
-let filterAll = document.getElementById("filterAll");//'All' filter button
-let filterCompleted = document.getElementById("filterCompleted");//Completed filter button
-let filterActive = document.getElementById("filterActive");//Active filter button
+let popupPriority = document.getElementById("popupPriority"); //Priority chosen in the popup
+let filterAll = document.getElementById("filterAll"); //'All' filter button
+let filterCompleted = document.getElementById("filterCompleted"); //Completed filter button
+let filterActive = document.getElementById("filterActive"); //Active filter button
 let sortByDateBtn = document.getElementById("sortDateBtn");
 let sortPriorityBtn = document.getElementById("sortPriorityBtn");
 
 let tasks = [];
 
+//Sort Tasks from High To Low
 function sortTasksByPriority() {
   tasks.sort((a, b) => {
     return parseInt(b.priority) - parseInt(a.priority);
@@ -20,21 +21,19 @@ function sortTasksByPriority() {
   displayTasks();
 }
 
+//Sort Tasks from New To Old
 function sortTasksByDate() {
   tasks.sort((a, b) => {
-    return a.date - b.date;
+    return b.date - a.date;
   });
-  console.log(tasks);
   displayTasks();
 }
 
 //To chose which sorting function
 function sortList() {
   let sortChosen = document.getElementsByClassName("sorting-chosen");
-  console.log(sortChosen[0].id);
   if (sortChosen[0].id == "sortDateBtn") {
     sortTasksByDate();
-    console.log("xxx");
   } else sortTasksByPriority();
 }
 
@@ -115,8 +114,9 @@ function addTasksToList(taskObject) {
   tasksList.appendChild(taskItem);
 
   taskItem.querySelector("#checkBtn").addEventListener("click", function () {
-    taskItem.classList.add("checked-task");
-    taskObject.isChecked = true;
+    taskItem.classList.toggle("checked-task");
+    if (taskObject.isChecked) taskObject.isChecked = false;
+    else taskObject.isChecked = true;
   });
 
   taskItem.querySelector("#editBtn").addEventListener("click", function () {
@@ -143,7 +143,6 @@ function openPopup(taskObject) {
 document.getElementById("savePopup").addEventListener("click", function () {
   const editedTaskName = popupText.value;
   const editedPriority = popupPriority.value;
-  console.log(editedPriority);
 
   if (editedTaskName == "") {
     alert("Task name cannot be empty!");
@@ -172,6 +171,7 @@ document.getElementById("cancelPopup").addEventListener("click", function () {
   popup.setAttribute("class", "popup");
 });
 
+// Click On All Filter
 filterAll.addEventListener("click", function () {
   filterAll.classList.add("activated-filter");
   filterActive.classList.remove("activated-filter");
@@ -189,6 +189,7 @@ filterAll.addEventListener("click", function () {
   });
 });
 
+// Click On Active Filter
 filterActive.addEventListener("click", function () {
   filterAll.classList.remove("activated-filter");
   filterActive.classList.add("activated-filter");
@@ -205,6 +206,7 @@ filterActive.addEventListener("click", function () {
   });
 });
 
+// Click On Complete Filter
 filterCompleted.addEventListener("click", function () {
   filterAll.classList.remove("activated-filter");
   filterActive.classList.remove("activated-filter");
@@ -224,12 +226,14 @@ filterCompleted.addEventListener("click", function () {
   });
 });
 
+// Click On Sorting By Date Button Filter
 sortByDateBtn.addEventListener("click", function () {
   sortByDateBtn.classList.add("sorting-chosen");
   sortPriorityBtn.classList.remove("sorting-chosen");
   sortTasksByDate();
 });
 
+// Click On Sorting By Priority Button Filter
 sortPriorityBtn.addEventListener("click", function () {
   sortByDateBtn.classList.remove("sorting-chosen");
   sortPriorityBtn.classList.add("sorting-chosen");
