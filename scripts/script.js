@@ -69,7 +69,7 @@ addBtn.addEventListener("click", function (e) {
 function convertDateToTime(date) {
   let amOrPm = "";
   let formatMinutes =
-    date.getMinutes() > 10 ? date.getMinutes() : `0${date.getMinutes()}`;
+    date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`;
   date.getHours() >= 12 ? (amOrPm = "pm") : (amOrPm = "am");
   return `${date.getHours() - 12}:${formatMinutes} ${amOrPm}`;
 }
