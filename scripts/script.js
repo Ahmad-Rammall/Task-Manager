@@ -8,6 +8,8 @@ let popupPriority = document.getElementById("popupPriority");
 let filterAll = document.getElementById("filterAll");
 let filterCompleted = document.getElementById("filterCompleted");
 let filterActive = document.getElementById("filterActive");
+let sortByDateBtn = document.getElementById("sortDateBtn");
+let sortPriorityBtn = document.getElementById("sortPriorityBtn");
 
 let tasks = [];
 
@@ -16,6 +18,21 @@ function sortTasksByPriority() {
     return parseInt(b.priority) - parseInt(a.priority);
   });
   displayTasks();
+}
+
+function sortTasksByDate() {
+  tasks.sort((a, b) => {
+    return a.date - b.date
+  });
+  console.log(tasks);
+  displayTasks();
+}
+
+function sortList() {
+  let sortChosen = document.getElementsByClassName("sorting-chosen");
+  console.log(sortChosen[0].id);
+  if (sortChosen[0].id == "sortDateBtn") {sortTasksByDate(); console.log('xxx');}
+  else sortTasksByPriority();
 }
 
 function displayTasks() {
@@ -34,23 +51,27 @@ addBtn.addEventListener("click", function (e) {
     return;
   }
 
-  if (priority.value == "") {
-    priority.value = "low";
-  }
-
   const taskObject = {
     id: tasks.length,
     taskName: taskName.value,
-    date: "",
+    date: new Date(),
     priority: priority.value,
     isChecked: false,
   };
 
   tasks.push(taskObject);
-  sortTasksByPriority();
+  sortList();
   console.log(tasks);
   addTasksToList(taskObject);
 });
+
+function convertDateToTime(date) {
+  let amOrPm = "";
+  let formatMinutes =
+    date.getMinutes() > 10 ? date.getMinutes() : `0${date.getMinutes()}`;
+  date.getHours() >= 12 ? (amOrPm = "pm") : (amOrPm = "am");
+  return `${date.getHours() - 12}:${formatMinutes} ${amOrPm}`;
+}
 
 function convertPriority(taskObject) {
   switch (taskObject.priority) {
@@ -73,7 +94,7 @@ function addTasksToList(taskObject) {
         <div class="task" id="taskName">
           ${taskObject.taskName}
         </div>
-        <div class="date">${taskObject.date}</div>
+        <div class="date">${convertDateToTime(taskObject.date)}</div>
         <div class="priority" id="taskPriority">${convertPriority(
           taskObject
         )}</div>
@@ -101,7 +122,7 @@ function addTasksToList(taskObject) {
 
   taskItem.querySelector("#deleteBtn").addEventListener("click", function () {
     //remove the task from the array
-    tasksArray.splice(taskObject.id, 1);
+    tasks.splice(taskObject.id, 1);
     // Remove the task item from the DOM
     taskItem.remove();
   });
@@ -139,7 +160,7 @@ document.getElementById("savePopup").addEventListener("click", function () {
   );
   taskItem.querySelector("#taskName").textContent = editedTaskName;
   taskItem.querySelector("#taskPriority").textContent = editedPriority;
-  sortTasksByPriority();
+  sortList();
 });
 
 document.getElementById("cancelPopup").addEventListener("click", function () {
@@ -197,3 +218,15 @@ filterCompleted.addEventListener("click", function () {
     element.style.display = "flex";
   });
 });
+
+sortByDateBtn.addEventListener('click' , function () { 
+  sortByDateBtn.classList.add('sorting-chosen')
+  sortPriorityBtn.classList.remove('sorting-chosen')
+  sortTasksByDate()
+ })
+
+ sortPriorityBtn.addEventListener('click' , function () { 
+  sortByDateBtn.classList.remove('sorting-chosen')
+  sortPriorityBtn.classList.add('sorting-chosen')
+  sortTasksByPriority()
+ })

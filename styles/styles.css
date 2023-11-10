@@ -95,11 +95,33 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-.filter {
+.filter-row {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 50px;
   margin-left: 20px;
+}
+
+.filters {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.sorting-section{
+  margin-right: 20px;
+}
+
+.sort-btn{
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.sorting-chosen{
+  background: rgba(80, 139, 252, 1)
 }
 
 .filter-option {
