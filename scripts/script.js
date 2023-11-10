@@ -165,6 +165,9 @@ document.getElementById("savePopup").addEventListener("click", function () {
   taskItem.querySelector("#taskName").textContent = editedTaskName;
   taskItem.querySelector("#taskPriority").textContent = editedPriority;
   sortList();
+  // Close popup modal
+  popup.setAttribute("class", "popup");
+
 });
 
 document.getElementById("cancelPopup").addEventListener("click", function () {
