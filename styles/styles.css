@@ -21,7 +21,6 @@ body {
   font-weight: 500;
   overflow-x: hidden;
   position: relative;
-
 }
 
 .container {
@@ -57,23 +56,24 @@ form {
   opacity: 1;
 }
 
-.form-btn{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.form-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-select{
-    width: 70px;
-    margin-right: 10px;
-    background-color: rgba(209, 208, 208, 0.801);
-    border-radius: 15px;
-    padding: 2px;
+select {
+  width: 70px;
+  margin-right: 10px;
+  background-color: rgba(209, 208, 208, 0.801);
+  border-radius: 15px;
+  padding: 2px;
 }
 
 input[type="text"] {
   text-align: center;
   height: 60px;
+  width: 220px;
   border: none;
   background: transparent;
   font-size: 20px;
@@ -95,27 +95,26 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-.filter{
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 50px;
-    margin-left: 20px;
+.filter {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 50px;
+  margin-left: 20px;
 }
 
-.filter-option{
-    margin-right: 40px;
-    cursor: pointer;
+.filter-option {
+  margin-right: 40px;
+  cursor: pointer;
 }
 
-.activated-filter{
-    border-bottom: 2px solid;
-    padding-bottom: 10px;
+.activated-filter {
+  border-bottom: 2px solid;
+  padding-bottom: 10px;
 }
 
 .content-row {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   text-align: left;
   margin: 15px;
   border-bottom: 1px solid #ebeaea;
@@ -130,7 +129,6 @@ input[type="submit"] {
 
 .task {
   flex: 7;
-  flex-wrap: wrap;
   margin-left: 5px;
 }
 
@@ -160,7 +158,7 @@ input[type="submit"] {
   color: yellow;
 }
 
-.checked-task{
+.checked-task {
   text-decoration: line-through;
   text-decoration-color: tomato;
   text-decoration-thickness: 3px;
@@ -168,29 +166,29 @@ input[type="submit"] {
 
 /* Popup Styles */
 
-.popup{
+.popup {
   position: absolute;
   top: 0%;
   left: 50vw;
   background-color: white;
-  transform: translate(-50%,-50%)scale(0.1);
+  transform: translate(-50%, -50%) scale(0.1);
   width: 30%;
   border-radius: 10px;
   visibility: hidden;
 }
 
-.center-popup{
+.center-popup {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.popup-buttons{
+.popup-buttons {
   display: flex;
   justify-content: flex-end;
 }
 
-.popup-button{
+.popup-button {
   margin: 5px;
   background-color: #5162cc;
   border-radius: 5px;
@@ -199,8 +197,8 @@ input[type="submit"] {
   cursor: pointer;
 }
 
-.open-popup{
+.open-popup {
   visibility: visible;
   top: 50%;
-  transform: translate(-50%,-50%)scale(1);
+  transform: translate(-50%, -50%) scale(1);
 }

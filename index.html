@@ -22,19 +22,22 @@
         <input type="text" placeholder="Add New Task" id="taskName" />
         <div class="form-btn">
           <select name="" id="priority">
-            <option value="">Priority</option>
-            <option value="low">Low</option>
-            <option value="middle">Middle</option>
-            <option value="high">High</option>
+            <option value="1">Low</option>
+            <option value="2">Middle</option>
+            <option value="3">High</option>
           </select>
           <input type="submit" value="+" id="addBtn" />
         </div>
       </form>
 
       <div class="filter">
-        <div class="filter-option all-filter activated-filter" id="filterAll">All</div>
+        <div class="filter-option all-filter activated-filter" id="filterAll">
+          All
+        </div>
         <div class="filter-option active-filter" id="filterActive">Active</div>
-        <div class="filter-option completed-filter" id="filterCompleted">Completed</div>
+        <div class="filter-option completed-filter" id="filterCompleted">
+          Completed
+        </div>
       </div>
 
       <div class="content-row main-row">
@@ -48,13 +51,12 @@
 
       <div class="popup" id="popup">
         <div class="center-popup">
-          <input type="text" placeholder="Edit Task" id="popupText"/>
-        <select name="" id="popupPriority">
-          <option value="">Priority</option>
-          <option value="low">Low</option>
-          <option value="middle">Middle</option>
-          <option value="high">High</option>
-        </select>
+          <input type="text" placeholder="Edit Task" id="popupText" />
+          <select name="" id="popupPriority">
+            <option value="1">Low</option>
+            <option value="2">Middle</option>
+            <option value="3">High</option>
+          </select>
         </div>
 
         <div class="popup-buttons">

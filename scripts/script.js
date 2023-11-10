@@ -10,7 +10,22 @@ let filterCompleted = document.getElementById("filterCompleted");
 let filterActive = document.getElementById("filterActive");
 
 let tasks = [];
-let completedTasks = [];
+
+function sortTasksByPriority() {
+  tasks.sort((a, b) => {
+    return parseInt(b.priority) - parseInt(a.priority);
+  });
+  displayTasks();
+}
+
+function displayTasks() {
+  tasksList.innerHTML = "";
+
+  // Add the sorted tasks to the DOM
+  tasks.forEach((task) => {
+    addTasksToList(task);
+  });
+}
 
 addBtn.addEventListener("click", function (e) {
   e.preventDefault();
@@ -28,21 +43,40 @@ addBtn.addEventListener("click", function (e) {
     taskName: taskName.value,
     date: "",
     priority: priority.value,
-    checked: false,
+    isChecked: false,
   };
 
   tasks.push(taskObject);
-  addTasksToList(tasks, taskObject);
+  sortTasksByPriority();
+  console.log(tasks);
+  addTasksToList(taskObject);
 });
 
-function addTasksToList(tasksArray, taskObject) {
+function convertPriority(taskObject) {
+  switch (taskObject.priority) {
+    case "1":
+      return "Low";
+    case "2":
+      return "Middle";
+    case "3":
+      return "High";
+  }
+}
+
+function addTasksToList(taskObject) {
+  const existingTask = document.getElementById(`task-${taskObject.id}`);
+
+  if (existingTask) return;
+
   const taskItem = document.createElement("div");
   taskItem.innerHTML = `
         <div class="task" id="taskName">
           ${taskObject.taskName}
         </div>
         <div class="date">${taskObject.date}</div>
-        <div class="priority" id="taskPriority">${taskObject.priority}</div>
+        <div class="priority" id="taskPriority">${convertPriority(
+          taskObject
+        )}</div>
         <div class="actions">
           <button class="btn-icon" id="checkBtn" ><i class="fa-solid fa-check"></i></button>
           <button class="btn-icon" id="editBtn">
@@ -53,12 +87,12 @@ function addTasksToList(tasksArray, taskObject) {
         `;
   taskItem.setAttribute("class", "content-row");
   taskItem.setAttribute("id", `task-${taskObject.id}`);
+  if (taskObject.isChecked) taskItem.classList.add("checked-task");
   tasksList.appendChild(taskItem);
 
   taskItem.querySelector("#checkBtn").addEventListener("click", function () {
-    taskItem.setAttribute("class", "content-row checked-task");
-    completedTasks.push(taskObject);
-    taskObject.checked = true;
+    taskItem.classList.add("checked-task");
+    taskObject.isChecked = true;
   });
 
   taskItem.querySelector("#editBtn").addEventListener("click", function () {
@@ -83,6 +117,7 @@ function openPopup(taskObject) {
 document.getElementById("savePopup").addEventListener("click", function () {
   const editedTaskName = popupText.value;
   const editedPriority = popupPriority.value;
+  console.log(editedPriority);
 
   if (editedTaskName == "") {
     alert("Task name cannot be empty!");
@@ -104,6 +139,7 @@ document.getElementById("savePopup").addEventListener("click", function () {
   );
   taskItem.querySelector("#taskName").textContent = editedTaskName;
   taskItem.querySelector("#taskPriority").textContent = editedPriority;
+  sortTasksByPriority();
 });
 
 document.getElementById("cancelPopup").addEventListener("click", function () {
@@ -111,9 +147,9 @@ document.getElementById("cancelPopup").addEventListener("click", function () {
 });
 
 filterAll.addEventListener("click", function () {
-  filterAll.classList.add('activated-filter');
-  filterActive.classList.remove('activated-filter')
-  filterCompleted.classList.remove('activated-filter')
+  filterAll.classList.add("activated-filter");
+  filterActive.classList.remove("activated-filter");
+  filterCompleted.classList.remove("activated-filter");
 
   const checkedTasks = tasksList.querySelectorAll(".checked-task");
   const uncheckedTasks = tasksList.querySelectorAll(
@@ -128,9 +164,9 @@ filterAll.addEventListener("click", function () {
 });
 
 filterActive.addEventListener("click", function () {
-    filterAll.classList.remove('activated-filter');
-    filterActive.classList.add('activated-filter')
-    filterCompleted.classList.remove('activated-filter')
+  filterAll.classList.remove("activated-filter");
+  filterActive.classList.add("activated-filter");
+  filterCompleted.classList.remove("activated-filter");
   const checkedTasks = tasksList.querySelectorAll(".checked-task");
   const uncheckedTasks = tasksList.querySelectorAll(
     `.content-row:not(.checked-task)`
@@ -144,9 +180,9 @@ filterActive.addEventListener("click", function () {
 });
 
 filterCompleted.addEventListener("click", function () {
-    filterAll.classList.remove('activated-filter');
-    filterActive.classList.remove('activated-filter')
-    filterCompleted.classList.add('activated-filter')
+  filterAll.classList.remove("activated-filter");
+  filterActive.classList.remove("activated-filter");
+  filterCompleted.classList.add("activated-filter");
   const uncheckedTasks = tasksList.querySelectorAll(
     `.content-row:not(.checked-task)`
   );
