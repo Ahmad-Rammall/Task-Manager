@@ -71,7 +71,9 @@ function convertDateToTime(date) {
   let formatMinutes =
     date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`;
   date.getHours() >= 12 ? (amOrPm = "pm") : (amOrPm = "am");
-  return `${date.getHours() - 12}:${formatMinutes} ${amOrPm}`;
+  if(date.getHours() > 12) return  `${date.getHours() - 12}:${formatMinutes}PM`
+  
+  return `${date.getHours()}:${formatMinutes}AM`;
 }
 
 function convertPriority(taskObject) {
